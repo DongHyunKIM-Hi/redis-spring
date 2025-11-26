@@ -1,5 +1,6 @@
 package org.example.redisspring.domain.ranking.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.example.redisspring.domain.ranking.model.RankingDto;
@@ -17,9 +18,14 @@ public class RankingController {
 
     private final RankingService rankingService;
 
+    @GetMapping("/category/last-3-days")
+    public ResponseEntity<List<RankingDto>> findTop3CategoryInLast3Days(@RequestParam LocalDate standardDate) {
+        return ResponseEntity.ok(rankingService.findTop3CategoryInLast3Days(standardDate));
+    }
+
     @GetMapping("/category")
-    public ResponseEntity<List<RankingDto>> findCategoryTopN(@RequestParam(defaultValue = "3") int limit) {
-        return ResponseEntity.ok(rankingService.findCategoryTopN(limit));
+    public ResponseEntity<List<RankingDto>> findCategoryTop3() {
+        return ResponseEntity.ok(rankingService.findCategoryTop3());
     }
 
 }
